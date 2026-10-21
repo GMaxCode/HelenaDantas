@@ -1,0 +1,106 @@
+---
+// src/components/QuemEhHelena.astro
+// §3 PLANO — Foto principal + 3 parágrafos + cidades-irmãs (SEO local).
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import irmaos from '../assets/photos/irmaos.jpeg';
+---
+
+<section class="quem" aria-labelledby="quem-titulo">
+  <div class="container quem-grid">
+    <figure class="quem-foto">
+      <Image
+        src={irmaos}
+        alt={`${site.nome} e o irmão Adriano — instrutora autônoma credenciada`}
+        width={640}
+        height={800}
+        loading="lazy"
+        decoding="async"
+        widths={[320, 480, 640, 960]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        format="webp"
+        quality={78}
+      />
+    </figure>
+
+    <div class="quem-texto">
+      <p class="kicker">Quem é a {site.nome}</p>
+      <h2 id="quem-titulo">Instrutora autônoma.</h2>
+
+      <p>
+        Sou a {site.nome}, instrutora autônoma credenciada de direção em {site.cidade}/{site.uf}.
+        Atendo {site.cidade} e cidades próximas — {site.cidadesIrmasLabel}.
+      </p>
+      <p>
+        Dou aulas para todas as idades: do jovem que vai tirar a primeira CNH ao adulto
+        que recomeçou do zero. Sem pressa, sem aula engessada — o ritmo é o seu.
+      </p>
+      <p>
+        O carro é meu, com direção dupla. Você aprende no trânsito real de {site.cidade}
+        e região, não em circuito fechado.
+      </p>
+
+      <ul class="quem-tags" aria-label="Cidades atendidas">
+        {
+          site.regiao.map((c) => (
+            <li class="quem-tag">{c}</li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quem {
+    padding: var(--space-9) 0;
+    background: var(--paper);
+  }
+  .quem-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    align-items: center;
+  }
+  .quem-foto img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    filter: grayscale(0.06) brightness(0.97);
+    transition: filter 250ms var(--ease-out);
+  }
+  .quem-foto img:hover { filter: none; }
+
+  .kicker {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--stop);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-sm);
+  }
+  .quem-texto h2 { margin-bottom: var(--space-4); }
+  .quem-texto p { margin-bottom: var(--space-4); }
+  .quem-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+  }
+  .quem-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    padding: var(--space-1) var(--space-3);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+  }
+
+  @media (min-width: 768px) {
+    .quem-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: var(--space-8);
+    }
+  }
+</style>

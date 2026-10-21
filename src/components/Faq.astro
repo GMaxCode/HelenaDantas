@@ -1,0 +1,101 @@
+---
+// src/components/Faq.astro
+// §3 PLANO — 5-8 perguntas comuns usando <details>/<summary>. Zero JS.
+const faq = [
+  {
+    q: 'Preciso fazer aula teórica antes da prática?',
+    a: 'Sim, a aula teórica é obrigatória e deve ser feita pelo app oficial CNH do Brasil (Serpro). É gratuita e online.',
+  },
+  {
+    q: 'Posso fazer aulas práticas com o carro do meu pai?',
+    a: 'Teoricamente sim, mas o carro precisa estar em dia com a Resolução Contran 1020/25 (itens de segurança obrigatórios). Para evitar dor de cabeça, a maioria dos alunos acaba usando o carro da instrutora — que já vem pronto para a prova.',
+  },
+  {
+    q: 'Quanto custa em média tirar a primeira CNH em SP?',
+    a: 'Os exames do Detran custam R$ 90 cada (valor sujeito a alteração). As aulas práticas são pagas à parte, combinadas diretamente com o instrutor.',
+  },
+  {
+    q: 'Preciso ir no Poupatempo?',
+    a: 'Sim — a coleta biométrica (foto, digitais, assinatura) é feita no Poupatempo da sua cidade, depois da aprovação na prova teórica.',
+  },
+  {
+    q: 'Exame toxicológico é obrigatório para CNH B?',
+    a: 'Para categoria B (carro) a obrigatoriedade do toxicológico é a mesma para renovação. Para C, D e E (caminhão/ônibus), é obrigatório. A Helena confirma isso no momento do agendamento.',
+  },
+  {
+    q: 'A Helena acompanha na prova prática?',
+    a: 'Pode sim, se você quiser. A presença da instrutora não garante aprovação, mas ajuda a entrar mais calmo. Combinamos pelo WhatsApp antes da prova.',
+  },
+];
+---
+
+<section id="faq" class="faq" aria-labelledby="faq-titulo">
+  <div class="container faq-inner">
+    <h2 id="faq-titulo" class="section-title">Dúvidas comuns</h2>
+    <ul class="faq-lista">
+      {
+        faq.map((item) => (
+          <li>
+            <details class="faq-item">
+              <summary class="faq-q">
+                <span>{item.q}</span>
+                <span class="faq-toggle" aria-hidden="true">+</span>
+              </summary>
+              <div class="faq-a">
+                <p>{item.a}</p>
+              </div>
+            </details>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding: var(--space-9) 0;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .faq-inner { max-width: 56rem; }
+  .faq .section-title {
+    color: var(--paper);
+    text-align: left;
+    margin-bottom: var(--space-6);
+  }
+  .faq-lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .faq-item {
+    border: 1px solid rgba(247, 243, 236, 0.18);
+    border-radius: var(--radius-md);
+    background: rgba(247, 243, 236, 0.03);
+  }
+  .faq-item[open] { border-color: var(--taxi); }
+  .faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-toggle {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: var(--taxi);
+    transition: transform 200ms var(--ease-out);
+  }
+  .faq-item[open] .faq-toggle { transform: rotate(45deg); }
+  .faq-a {
+    padding: 0 var(--space-5) var(--space-5);
+    color: var(--paper);
+    opacity: 0.9;
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+// src/components/CtaFinal.astro
+// §3 PLANO — CTA final com WhatsApp + área de atuação.
+import WppButton from './WppButton.astro';
+import { site, linkWhatsApp } from '../data/site';
+---
+
+<section class="cta-final" aria-labelledby="cta-final-titulo">
+  <div class="container cta-final-inner">
+    <h2 id="cta-final-titulo">Bora?</h2>
+    <p>
+      Se você chegou até aqui, está no caminho. Fale com a {site.nome} pelo WhatsApp —
+      {site.cidade} e região, no horário que combinar.
+    </p>
+    <WppButton href={linkWhatsApp()} />
+    <p class="cta-area">Área de atuação: {site.regiao.join(' · ')}</p>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    padding: var(--space-9) 0;
+    background: var(--paper);
+    text-align: center;
+  }
+  .cta-final-inner > * { margin-inline: auto; }
+  .cta-final h2 { margin-bottom: var(--space-4); }
+  .cta-final p { margin-bottom: var(--space-5); }
+  .cta-area {
+    margin-top: var(--space-5);
+    font-family: var(--font-mono);
+    color: var(--stop);
+    text-transform: uppercase;
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    max-width: none;
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+// src/pages/primeira-habilitacao-sp.astro
+// Guia dedicado, com índice lateral desktop, mais respiro nos passos.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Passos from '../components/Passos.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { passos, mensagemFinal } from '../data/passos';
+import { site, linkWhatsApp } from '../data/site';
+import WppButton from '../components/WppButton.astro';
+
+const title = 'Passo a passo da primeira habilitação em São Paulo | ' + site.nome;
+const description = `Guia completo dos 9 passos da primeira CNH em SP — desde o curso teórico pelo app até a prova prática. ${site.cidade}/${site.uf}.`;
+---
+
+<BaseLayout title={title} description={description} h1="Passo a passo da primeira habilitação em São Paulo">
+  <header class="guia-header">
+    <div class="container">
+      <p class="guia-aviso">
+        <strong>{site.validade}.</strong>{' '}
+        Última atualização: <time datetime={new Date().toISOString().slice(0, 10)}>
+          {new Date().toLocaleDateString('pt-BR')}
+        </time>.
+      </p>
+      <p class="guia-resumo">
+        Guia com os 9 passos para tirar a primeira CNH (categoria B) em São Paulo.
+        Onde tem link oficial, tem botão. Onde não tem, tem um aviso amigável pra você não cair em cilada.
+      </p>
+      <div class="guia-cta">
+        <WppButton href={linkWhatsApp(site.whatsappMensagemPadrao)} />
+      </div>
+    </div>
+  </header>
+
+  <div class="container guia-grid">
+    <aside class="guia-toc" aria-label="Sumário">
+      <p class="toc-titulo">Sumário</p>
+      <ol class="toc-lista">
+        {
+          passos.map((p) => (
+            <li>
+              <a href={`#passo-${p.numero}`} class="toc-link">
+                <span class="toc-numero">{String(p.numero).padStart(2, '0')}</span>
+                <span class="toc-titulo-item">{p.titulo}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </aside>
+
+    <div class="guia-conteudo">
+      <Passos />
+
+      <section class="guia-fechamento">
+        <h2>Pronto!</h2>
+        <p>{mensagemFinal}</p>
+        <div class="guia-fechamento-actions">
+          <WppButton href={linkWhatsApp(mensagemFinal)} />
+        </div>
+        <p class="guia-aviso-final">
+          <small>
+            Os preços (exames R$ 90 cada, valores sujeitos a alteração) e procedimentos podem mudar sem aviso.
+            Confirme sempre no portal oficial do Detran-SP.
+          </small>
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <CtaFinal />
+</BaseLayout>
+
+<style>
+  .guia-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--space-8) 0;
+    text-align: center;
+  }
+  .guia-header > * { margin-inline: auto; }
+  .guia-aviso {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--taxi);
+    margin-bottom: var(--space-3);
+    max-width: none;
+  }
+  .guia-resumo {
+    margin: 0 auto var(--space-5);
+    color: var(--paper);
+    opacity: 0.9;
+    max-width: 50ch;
+  }
+
+  .guia-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    padding-top: var(--space-7);
+  }
+
+  .guia-toc {
+    border-left: 2px solid var(--line);
+    padding-left: var(--space-4);
+    position: sticky;
+    top: 96px;
+    align-self: start;
+  }
+  .toc-titulo {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stop);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-3);
+  }
+  .toc-lista { display: flex; flex-direction: column; gap: var(--space-3); }
+  .toc-link {
+    display: flex;
+    gap: var(--space-3);
+    align-items: baseline;
+    color: var(--ink);
+    font-size: var(--text-sm);
+  }
+  .toc-numero {
+    font-family: var(--font-mono);
+    color: var(--taxi);
+    font-weight: 700;
+  }
+
+  .guia-fechamento {
+    margin-top: var(--space-8);
+    padding: var(--space-7) var(--space-5);
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+  .guia-fechamento h2 { color: var(--paper); margin-bottom: var(--space-4); }
+  .guia-fechamento > p { margin-inline: auto; }
+  .guia-fechamento-actions { margin-top: var(--space-5); }
+  .guia-aviso-final { margin-top: var(--space-5); opacity: 0.75; }
+
+  @media (min-width: 1024px) {
+    .guia-grid {
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

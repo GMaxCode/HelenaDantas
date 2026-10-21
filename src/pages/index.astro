@@ -1,0 +1,28 @@
+---
+// src/pages/index.astro
+// HOME COMPLETA — Hero + Quem é a Helena + Como funciona +
+// Prova social + Passos + FAQ + CTA final.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import QuemEhHelena from '../components/QuemEhHelena.astro';
+import ComoFunciona from '../components/ComoFunciona.astro';
+import ProvaSocial from '../components/ProvaSocial.astro';
+import Passos from '../components/Passos.astro';
+import Faq from '../components/Faq.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+
+const title = 'Helena Dantas — Instrutora autônoma de direção em Sumaré/SP | Aulas práticas de CNH';
+const description =
+  'Aulas práticas de carro para a sua primeira CNH em Sumaré/SP e região. Você marca o ritmo; a Helena te leva até a prova. WhatsApp +55 19 99318-8336.';
+---
+
+<BaseLayout title={title} description={description} h1="Aprenda a dirigir em Sumaré/SP com a Helena — instrutora autônoma CNH do Brasil">
+  <Hero />
+  <QuemEhHelena />
+  <ComoFunciona />
+  <ProvaSocial />
+  <Passos />
+  <Faq />
+  <CtaFinal />
+</BaseLayout>

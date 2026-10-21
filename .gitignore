@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.production
+.DS_Store
+*.log
+.cache/
+
+# Fotos e vídeos de origem (não devem ir pro repo — só os otimizados em src/ e public/)
+fotos/
+hero ref/
+
+# Arquivos gerados que podem ser reconstruídos via npm run optimize-photos / npm run build
+# (mas como nosso pipeline gera em src/_astro/ + public/photos/, o que tá fora desses caminhos é "raw")
+*.jpeg.bak
+*.orig

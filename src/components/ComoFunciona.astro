@@ -1,0 +1,78 @@
+---
+// src/components/ComoFunciona.astro
+// §3 PLANO — 5 bullets das aulas.
+const bullets = [
+  { titulo: 'Você define quantas aulas', descricao: 'Sem pacote fechado, sem hora-relógio corrido.' },
+  { titulo: 'Agenda pelo WhatsApp', descricao: 'Resposta direta da Helena — sem central, sem espera.' },
+  { titulo: 'Carro da instrutora, com direção dupla', descricao: 'Você dirige sem se preocupar com mecânica.' },
+  { titulo: 'Preparação para a prova prática do Detran', descricao: 'Foco no que a examinadora cobra na prática.' },
+  { titulo: 'Acompanho na prova se você quiser', descricao: 'Te vejo mais calmo no dia do exame.' },
+];
+---
+
+<section id="como-funciona" class="como" aria-labelledby="como-titulo">
+  <div class="container">
+    <h2 id="como-titulo" class="section-title">Como funcionam as aulas</h2>
+    <ol class="como-list">
+      {
+        bullets.map((b) => (
+          <li class="como-item">
+            <div class="como-mark" aria-hidden="true">→</div>
+            <div>
+              <h3 class="como-item-titulo">{b.titulo}</h3>
+              <p class="como-item-desc">{b.descricao}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .como {
+    padding: var(--space-9) 0;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .como .section-title { color: var(--paper); }
+  .como-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+  .como-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: rgba(247, 243, 236, 0.04);
+    border: 1px solid rgba(247, 243, 236, 0.12);
+    border-radius: var(--radius-md);
+  }
+  .como-mark {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--taxi);
+    line-height: 1;
+    flex: 0 0 auto;
+  }
+  .como-item-titulo {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-2);
+  }
+  .como-item-desc {
+    opacity: 0.85;
+    color: var(--paper);
+  }
+
+  @media (min-width: 768px) {
+    .como-list { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .como-list { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

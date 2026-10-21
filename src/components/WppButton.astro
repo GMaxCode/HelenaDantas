@@ -1,0 +1,62 @@
+---
+// src/components/WppButton.astro
+// O ÚNICO lugar do site onde "Falar com a Helena" vira link.
+// §12: href ausente/vazio → desativado com "Em breve".
+
+import type { VarianteBotao } from '../data/passos';
+
+export interface Props {
+  texto?: string;
+  href?: string;
+  /** Variantes: wpp (verde), default (preto), soft (transparente). */
+  variantes?: VarianteBotao[];
+  /** Slotted como icone opcional. */
+  icone?: boolean;
+  ariaLabel?: string;
+}
+
+const {
+  texto = 'Falar com a Helena no WhatsApp',
+  href,
+  variantes = ['cta-wpp'],
+  ariaLabel,
+} = Astro.props;
+
+const isDisabled = !href || href === '' || href === '#';
+const isExternal = !isDisabled && (href?.startsWith('http') ?? false);
+
+const variantClass = variantes
+  .map((v) => (v === 'cta-wpp' ? 'btn--wpp' : v === 'cta-default' ? 'btn--default' : 'btn--soft'))
+  .join(' ');
+
+const className = `btn ${variantClass}`;
+---
+
+{isDisabled ? (
+  <span class={className} aria-disabled="true" role="link">
+    Em breve
+  </span>
+) : (
+  <a
+    href={href}
+    class={className}
+    aria-label={ariaLabel}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+  >
+    <span>{texto}</span>
+    {isExternal && (
+      <svg
+        class="ext-icon"
+        aria-hidden="true"
+        viewBox="0 0 16 16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill="currentColor"
+          d="M9.5 2H14v4.5h-1.5V4.56L8.03 9.03 6.97 7.97l4.47-4.47H9.5V2zM2 4h5.5v1.5H3.5v7h7V8h1.5v6H2V4z"
+        />
+      </svg>
+    )}
+  </a>
+)}

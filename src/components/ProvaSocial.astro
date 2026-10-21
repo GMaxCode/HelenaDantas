@@ -1,0 +1,117 @@
+---
+// src/components/ProvaSocial.astro
+// §3 PLANO — Grade responsiva curada de fotos de alunos.
+// Autorização confirmada pela Helena. Todas via <Image> (WebP, lazy, srcset).
+import { Image } from 'astro:assets';
+import { site, linkWhatsApp } from '../data/site';
+
+import aluno01 from '../assets/photos/alunos/aluno-01.jpg';
+import aluno02 from '../assets/photos/alunos/aluno-02.jpg';
+import aluno03 from '../assets/photos/alunos/aluno-03.jpg';
+import aluno04 from '../assets/photos/alunos/aluno-04.jpg';
+import aluno05 from '../assets/photos/alunos/aluno-05.jpg';
+import aluno06 from '../assets/photos/alunos/aluno-06.jpg';
+import aluno07 from '../assets/photos/alunos/aluno-07.jpg';
+import aluno08 from '../assets/photos/alunos/aluno-08.jpg';
+
+const fotos = [
+  { src: aluno01, alt: 'Aluno ao lado do carro da instrutora Helena Dantas após concluir as aulas práticas' },
+  { src: aluno02, alt: 'Aluno ao lado do veículo de autoescola da instrutora Helena Dantas em Sumaré' },
+  { src: aluno03, alt: 'Aluna ao lado do carro com a marca da instrutora Helena Dantas' },
+  { src: aluno04, alt: 'Grupo de alunas da Helena Dantas após concluírem as aulas práticas' },
+  { src: aluno05, alt: 'Aluno ao lado do carro da Helena Dantas, instrutora autônoma em Sumaré' },
+  { src: aluno06, alt: 'Aluna adulta ao lado do veículo da instrutora Helena Dantas' },
+  { src: aluno07, alt: 'Aluno da Helena Dantas durante as aulas práticas de direção' },
+  { src: aluno08, alt: 'Alunas da Helena Dantas após concluírem as aulas práticas em Sumaré' },
+];
+---
+
+<section class="prova-social" aria-labelledby="prova-titulo">
+  <div class="container">
+    <h2 id="prova-titulo" class="section-title">Alunos que já viraram condutores</h2>
+    <p class="prova-intro">
+      Gente de todas as idades, de {site.cidade} e região, que entrou no carro da
+      {site.nome} e saiu com a CNH na mão.
+    </p>
+
+    <ul class="prova-grid">
+      {
+        fotos.map((f) => (
+          <li class="prova-item">
+            <Image
+              src={f.src}
+              alt={f.alt}
+              width={480}
+              height={480}
+              loading="lazy"
+              decoding="async"
+              widths={[240, 360, 480]}
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+              format="webp"
+              quality={78}
+            />
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="prova-cta">
+      <a
+        class="btn btn--wpp"
+        href={linkWhatsApp('Olá Helena! Quero fazer aulas práticas com você.')}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Quero ser o próximo aluno da Helena Dantas"
+      >
+        Quero ser o próximo
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .prova-social {
+    padding: var(--space-9) 0;
+    background: var(--paper);
+    text-align: center;
+  }
+  .section-title { margin-bottom: var(--space-4); }
+  .prova-intro {
+    margin: 0 auto var(--space-7);
+    max-width: 52ch;
+    color: var(--gravel);
+  }
+  .prova-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    text-align: left;
+  }
+  .prova-item :global(img) {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    /* Grayscale suave que vira cor no hover/foco — §4 do PLANO */
+    filter: grayscale(0.35) contrast(1.02);
+    transition: filter 300ms var(--ease-out), transform 300ms var(--ease-out);
+  }
+  .prova-item :global(img):hover,
+  .prova-item :global(img):focus-visible {
+    filter: none;
+    transform: scale(1.03);
+  }
+  .prova-cta { margin-top: var(--space-7); }
+
+  @media (min-width: 640px) {
+    .prova-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .prova-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prova-item :global(img) { transition: none; }
+    .prova-item :global(img):hover { transform: none; }
+  }
+</style>

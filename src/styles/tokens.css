@@ -1,0 +1,72 @@
+/* src/styles/tokens.css
+ * Tokens visuais do site. Toda cor/medida/tamanho vem daqui.
+ * Paleta §4 do PLANO.md.
+ */
+
+:root {
+  /* Cores (nomes semânticos, valores do PLANO). */
+  --ink: #0e0e10;
+  --paper: #f7f3ec;
+  --stop: #c8311e;
+  --taxi: #f2c14e;
+  --gravel: #1b1b1f;
+  --signal: #2c8f4f;
+  --line: rgba(27, 27, 31, 0.1);
+
+  /* Tipografia (fontes via @fontsource-variable carregadas no BaseLayout). */
+  --font-display: 'Bebas Neue Variable', 'Bebas Neue', 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Escala tipográfica (mobile-first, 17px base). */
+  --text-base: 1.0625rem; /* 17px */
+  --text-sm: 0.875rem;
+  --text-lg: 1.125rem; /* 18px desktop */
+
+  /* Espaçamento (modular, 4px base). */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Layout. */
+  --gutter: 1rem; /* 16px mobile */
+  --container-max: 72rem; /* 1152px */
+
+  /* Estados & raios. */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+
+  /* Transição & sombra. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-cta: 0 6px 0 var(--ink);
+  --shadow-cta-hover: 0 2px 0 var(--ink);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 1.5rem;
+    --text-base: 1.125rem; /* 18px desktop */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+/* Reduced motion desliga tudo (§4 do PLANO). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ease-out: linear;
+    --shadow-cta: none;
+    --shadow-cta-hover: none;
+  }
+}

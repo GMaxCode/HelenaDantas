@@ -1,0 +1,46 @@
+---
+// src/pages/404.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WppButton from '../components/WppButton.astro';
+import { site, linkWhatsApp } from '../data/site';
+
+const title = 'Página não encontrada | ' + site.nome;
+---
+
+<BaseLayout title={title} h1="Página não encontrada">
+  <section class="quatro-quatro">
+    <div class="container">
+      <p class="numero-404" aria-hidden="true">404</p>
+      <h2>Esta página não existe.</h2>
+      <p>
+        Que tal voltar para a <a href="/">home</a> ou falar com a {site.nome}?
+      </p>
+      <WppButton href={linkWhatsApp()} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .quatro-quatro {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--paper);
+    padding: var(--space-9) 0;
+  }
+  .quatro-quatro .container > * { margin-inline: auto; }
+  .numero-404 {
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 24vw, 14rem);
+    line-height: 0.9;
+    color: var(--stop);
+    margin-bottom: var(--space-4);
+  }
+  .quatro-quatro h2 {
+    margin-bottom: var(--space-4);
+  }
+  .quatro-quatro p { margin-bottom: var(--space-5); }
+  .quatro-quatro a { color: var(--stop); }
+</style>

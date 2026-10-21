@@ -1,0 +1,145 @@
+---
+// src/components/Passos.astro
+// Consome passos.ts. Renderiza numerados, com caixinhas de destaque (§3 do PLANO).
+// Se `simple=true`, esconde destaques e o título H2 (pra reutilizar na home sem duplicar H2).
+import { passos, mensagemFinal } from '../data/passos';
+import WppButton from './WppButton.astro';
+
+export interface Props {
+  simple?: boolean;
+}
+const { simple = false } = Astro.props;
+---
+
+<section
+  id="primeira-habilitacao"
+  class="passos"
+  aria-labelledby={simple ? undefined : 'passos-titulo'}
+>
+  <div class="container">
+    {!simple && <h2 id="passos-titulo" class="section-title">Passo a passo da primeira CNH em SP</h2>}
+
+    <ol class="passos-lista">
+      {
+        passos.map((p) => (
+          <li class="passo" id={`passo-${p.numero}`}>
+            <div class="passo-numero" aria-hidden="true">{String(p.numero).padStart(2, '0')}</div>
+            <div class="passo-conteudo">
+              <h3 class="passo-titulo">{p.titulo}</h3>
+              <p class="passo-descricao">{p.descricao}</p>
+
+              {p.destaque && (
+                <div class="passo-destaque" role="note">
+                  <strong>{p.destaque}</strong>
+                </div>
+              )}
+
+              {p.botoes.length > 0 && (
+                <div class="passo-botoes">
+                  {p.botoes.map((b) => (
+                    <WppButton
+                      texto={b.texto}
+                      href={b.href}
+                      variantes={b.variantes}
+                      ariaLabel={b.ariaLabel}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    {!simple && (
+      <div class="passos-fechamento">
+        <p>{mensagemFinal}</p>
+        <div class="passos-fechamento-actions">
+          <WppButton href={`https://wa.me/5519993188336?text=${encodeURIComponent(mensagemFinal)}`} />
+        </div>
+        <p class="passos-aviso">
+          <small>
+            Os preços (exames R$ 90 cada, valores sujeitos a alteração) e procedimentos podem mudar sem aviso.
+            Confirme sempre no portal oficial do Detran-SP.
+          </small>
+        </p>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .passos {
+    padding: var(--space-9) 0;
+    background: var(--paper);
+  }
+  .passos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    margin-top: var(--space-6);
+  }
+  .passo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    scroll-margin-top: 96px;
+  }
+  .passo-numero {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 0.9;
+    color: var(--taxi);
+    letter-spacing: -0.04em;
+  }
+  .passo-conteudo h3 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    margin-bottom: var(--space-3);
+  }
+  .passo-descricao {
+    color: var(--gravel);
+  }
+  .passo-destaque {
+    background: var(--taxi);
+    color: var(--ink);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-4);
+    border: 2px solid var(--ink);
+  }
+  .passo-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .passos-fechamento {
+    margin-top: var(--space-8);
+    padding: var(--space-7) var(--space-5);
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+  .passos-fechamento-actions {
+    margin-top: var(--space-5);
+  }
+  .passos-fechamento > p {
+    margin-inline: auto;
+  }
+  .passos-aviso {
+    margin-top: var(--space-5);
+    color: var(--paper);
+    opacity: 0.7;
+  }
+
+  @media (min-width: 768px) {
+    .passo {
+      grid-template-columns: 120px 1fr;
+      gap: var(--space-6);
+    }
+  }
+</style>

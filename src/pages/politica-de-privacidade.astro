@@ -1,0 +1,106 @@
+---
+// src/pages/politica-de-privacidade.astro
+// LGPD: site estático, sem coleta de dados. Texto curto.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const title = 'Política de Privacidade | ' + site.nome;
+const description = `Política de Privacidade do site institucional de ${site.nome}. Sem coleta de dados via formulário.`;
+---
+
+<BaseLayout title={title} description={description} h1="Política de Privacidade">
+  <article class="politica">
+    <div class="container">
+      <header class="politica-header">
+        <p class="kicker">LGPD</p>
+        <h2>Política de Privacidade</h2>
+        <p class="ultima-atual">
+          Última atualização: <time datetime={new Date().toISOString().slice(0, 10)}>
+            {new Date().toLocaleDateString('pt-BR')}
+          </time>.
+        </p>
+      </header>
+
+      <section>
+        <h3>Resumo</h3>
+        <p>
+          Este é um site institucional estático. Não coletamos dados via formulário,
+          não usamos cookies de rastreamento, não temos login nem área de membros.
+        </p>
+      </section>
+
+      <section>
+        <h3>O único dado que trafega: WhatsApp</h3>
+        <p>
+          Todos os botões "Falar no WhatsApp" abrem a conversa diretamente no aplicativo
+          do usuário, no número {site.whatsappFormatado}. A conversa não passa por nós —
+          a conversa é entre você e a {site.nome}, no WhatsApp.
+        </p>
+      </section>
+
+      <section>
+        <h3>Hospedagem e logs</h3>
+        <p>
+          O site é hospedado em CDN (Cloudflare Pages, em produção). Como qualquer servidor,
+          o provedor pode registrar endereço de IP, navegador, referência e carimbo de data/hora
+          em logs de acesso, por tempo limitado e para fins de segurança e contagem de tráfego.
+          Esses dados não são vendidos nem compartilhados.
+        </p>
+      </section>
+
+      <section>
+        <h3>Direitos do titular (LGPD)</h3>
+        <p>
+          Para dúvidas, pedidos de acesso, correção ou eliminação de dados tratados por nós,
+          fale por e-mail: <a href={`mailto:${site.emailContato}`}>{site.emailContato}</a>.
+        </p>
+      </section>
+
+      <section>
+        <h3>Cookies</h3>
+        <p>Não usamos cookies. Quando você abrir uma conversa no WhatsApp, a política aplicável passa a ser a do próprio WhatsApp.</p>
+      </section>
+
+      <p class="voltar"><a href="/">← Voltar para a home</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .politica {
+    padding: var(--space-8) 0;
+    background: var(--paper);
+  }
+  .politica-header { margin-bottom: var(--space-7); text-align: center; }
+  .kicker {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--stop);
+    font-size: var(--text-sm);
+  }
+  .politica-header h2 {
+    margin-bottom: var(--space-3);
+  }
+  .ultima-at {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--gravel);
+    max-width: none;
+  }
+  .politica section {
+    margin-bottom: var(--space-6);
+  }
+  .politica h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-3);
+    letter-spacing: 0.02em;
+  }
+  .politica p { color: var(--gravel); }
+  .politica a { color: var(--stop); }
+  .voltar {
+    margin-top: var(--space-7);
+    text-align: center;
+  }
+</style>

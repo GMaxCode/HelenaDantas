@@ -1,0 +1,23 @@
+{
+  "name": "site-helena",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check-links": "node scripts/check-links.mjs",
+    "optimize-photos": "node scripts/optimize-photos.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.18",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource/bebas-neue": "^5.2.0",
+    "@fontsource/space-mono": "^5.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
