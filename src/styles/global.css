@@ -121,6 +121,12 @@
     box-shadow: none;
   }
 
+  .btn--store {
+    --btn-bg: var(--signal);
+    --btn-fg: var(--ink);
+    border-color: var(--ink);
+  }
+
   .btn[aria-disabled='true'] {
     opacity: 0.5;
     cursor: not-allowed;

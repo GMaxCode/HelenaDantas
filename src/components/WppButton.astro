@@ -26,7 +26,15 @@ const isDisabled = !href || href === '' || href === '#';
 const isExternal = !isDisabled && (href?.startsWith('http') ?? false);
 
 const variantClass = variantes
-  .map((v) => (v === 'cta-wpp' ? 'btn--wpp' : v === 'cta-default' ? 'btn--default' : 'btn--soft'))
+  .map((v) =>
+    v === 'cta-wpp'
+      ? 'btn--wpp'
+      : v === 'cta-default'
+        ? 'btn--default'
+        : v === 'cta-store'
+          ? 'btn--store'
+          : 'btn--soft'
+  )
   .join(' ');
 
 const className = `btn ${variantClass}`;

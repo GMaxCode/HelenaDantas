@@ -5,7 +5,7 @@
 
 import { linkWhatsApp, site } from './site';
 
-export type VarianteBotao = 'cta-wpp' | 'cta-default' | 'cta-soft';
+export type VarianteBotao = 'cta-wpp' | 'cta-default' | 'cta-soft' | 'cta-store';
 
 export type Botao = {
   /** Texto visível. */
@@ -40,13 +40,13 @@ export const passos: Passo[] = [
         texto: 'Baixar no Google Play',
         href: 'https://play.google.com/store/apps/details?id=br.gov.serpro.cnhe&hl=pt_BR',
         externo: true,
-        variantes: ['cta-default'],
+        variantes: ['cta-store'],
       },
       {
         texto: 'Baixar na App Store',
         href: 'https://apps.apple.com/br/app/cnh-do-brasil/id1275057217',
         externo: true,
-        variantes: ['cta-default'],
+        variantes: ['cta-store'],
       },
     ],
   },
