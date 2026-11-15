@@ -1,0 +1,353 @@
+---
+// src/components/HomenagemSecao.astro
+// Seção comemorativa integrada na home do site para o aniversário da Helena.
+import { Image } from 'astro:assets';
+import { site, linkWhatsApp } from '../data/site';
+import aluno04 from '../assets/photos/alunos/aluno-04.jpg';
+
+const mensagemWhatsApp =
+  'Helena, vi a linda homenagem no seu site! Parabéns pelo seu aniversário, prof! Muita saúde, paz, bênçãos e realizações! 🎂🎉🚗';
+const linkWppParabens = linkWhatsApp(mensagemWhatsApp);
+---
+
+<section class="homenagem-secao" id="homenagem-aniversario" aria-labelledby="homenagem-titulo">
+  <div class="container">
+    <div class="homenagem-card">
+      <!-- Decorações festivas nos cantos -->
+      <div class="homenagem-corner corner-tl" aria-hidden="true">🎉</div>
+      <div class="homenagem-corner corner-tr" aria-hidden="true">🎂</div>
+
+      <div class="homenagem-grid">
+        <!-- Coluna da Mensagem -->
+        <div class="homenagem-conteudo">
+          <div class="homenagem-badge">
+            <span class="badge-dot" aria-hidden="true">✦</span>
+            <span>HOMENAGEM ESPECIAL · 15 DE NOVEMBRO</span>
+            <span class="badge-dot" aria-hidden="true">✦</span>
+          </div>
+
+          <h2 id="homenagem-titulo" class="homenagem-titulo">
+            Feliz Aniversário, Professora Helena! 🥳🎉
+          </h2>
+
+          <p class="homenagem-lead">
+            Hoje quero te desejar um dia muito especial, cheio de carinho, alegria e pessoas queridas por perto.
+            Que Deus abençoe sua vida, ilumine seus caminhos e te dê muita saúde, paz e motivos para sorrir.
+            Que esse novo ciclo venha com boas surpresas, conquistas e a realização de tudo aquilo que você guarda no coração!
+          </p>
+
+          <blockquote class="homenagem-quote">
+            <p>
+              Também quero aproveitar para agradecer pela <strong>paciência</strong>, pela <strong>dedicação</strong>
+              e por todos os ensinamentos durante as aulas. Aprender a dirigir envolve nervosismo,
+              insegurança e aquele medo de errar, então <em>faz muita diferença</em> ter alguém para orientar
+              e dar confiança nesse processo.
+            </p>
+            <p class="homenagem-cnh">
+              Você fez parte de uma conquista muito importante para mim, e vou lembrar com carinho
+              dessa fase e da sua ajuda para conquistar minha CNH! 🚗❤️
+            </p>
+          </blockquote>
+
+          <p class="homenagem-fechamento">
+            Que você continue ajudando muitas pessoas a realizarem esse sonho e que receba de volta
+            todo o carinho que coloca no seu trabalho. Aproveite bastante seu dia, receba muitos abraços
+            e comemore muito. <strong>Parabéns e muitas felicidades! 🥰🎂</strong>
+          </p>
+
+          <div class="homenagem-acoes">
+            <button type="button" class="btn btn--presente" id="btn-abrir-homenagem-secao">
+              <span aria-hidden="true">🎁</span>
+              <span>Abrir presente com confetes</span>
+            </button>
+
+            <a
+              class="btn btn--wpp-homenagem"
+              href={linkWppParabens}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Dar parabéns para a Helena no WhatsApp"
+            >
+              <span aria-hidden="true">💬</span>
+              <span>Mandar Parabéns no WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna da Foto & Conquistas -->
+        <div class="homenagem-lateral">
+          <div class="homenagem-moldura">
+            <Image
+              src={aluno04}
+              alt="Alunas comemorando com a instrutora Helena Dantas"
+              width={540}
+              height={540}
+              loading="lazy"
+              decoding="async"
+              format="webp"
+              quality={82}
+              class="homenagem-img"
+            />
+            <div class="homenagem-polaroid-legend">
+              <span class="legend-star" aria-hidden="true">⭐</span>
+              <span>A melhor instrutora! CNH na mão e gratidão no coração</span>
+            </div>
+          </div>
+
+          <div class="homenagem-selos">
+            <div class="selo-item">
+              <span class="selo-emoji" aria-hidden="true">🚗</span>
+              <span class="selo-text">Paciência que transforma medo em confiança</span>
+            </div>
+            <div class="selo-item">
+              <span class="selo-emoji" aria-hidden="true">🏆</span>
+              <span class="selo-text">Mais que instrutora, parceira de conquista</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // O botão da seção dispara a abertura do modal de aniversário
+  const btnSecao = document.getElementById('btn-abrir-homenagem-secao');
+  btnSecao?.addEventListener('click', () => {
+    const modal = document.getElementById('bday-modal');
+    if (modal) {
+      modal.removeAttribute('hidden');
+      modal.classList.add('is-active');
+      document.body.classList.add('bday-modal-open');
+
+      // Tenta acionar confetes se a função estiver disponível
+      const canvas = document.getElementById('bday-canvas');
+      const btnConfetti = document.getElementById('bday-trigger-confetti');
+      btnConfetti?.click();
+    }
+  });
+</script>
+
+<style>
+  .homenagem-secao {
+    padding: var(--space-8) 0;
+    background: #fdfaf3;
+    position: relative;
+  }
+  .homenagem-card {
+    position: relative;
+    background: #fffdfa;
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 0 var(--ink);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    background-image: radial-gradient(#faebc8 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .homenagem-corner {
+    position: absolute;
+    font-size: 2rem;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .corner-tl {
+    top: 1rem;
+    left: 1rem;
+    animation: cornerWiggle 2.5s infinite ease-in-out;
+  }
+  .corner-tr {
+    top: 1rem;
+    right: 1rem;
+    animation: cornerWiggle 2.5s infinite ease-in-out 1.25s;
+  }
+  @keyframes cornerWiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(12deg) scale(1.15); }
+  }
+
+  .homenagem-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  /* Badge */
+  .homenagem-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--taxi);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 0.85rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 2px 0 var(--ink);
+    margin-bottom: var(--space-3);
+  }
+  .badge-dot {
+    color: var(--stop);
+  }
+
+  .homenagem-titulo {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    margin-bottom: var(--space-4);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .homenagem-lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: var(--space-4);
+    max-width: none;
+  }
+
+  .homenagem-quote {
+    position: relative;
+    background: #fff8e8;
+    border-left: 5px solid var(--stop);
+    border-top: 1.5px solid rgba(200, 49, 30, 0.2);
+    border-right: 1.5px solid rgba(200, 49, 30, 0.2);
+    border-bottom: 1.5px solid rgba(200, 49, 30, 0.2);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 1.25rem 1.5rem;
+    margin: var(--space-4) 0;
+  }
+  .homenagem-quote p {
+    max-width: none;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  .homenagem-quote p:last-child {
+    margin-bottom: 0;
+  }
+  .homenagem-cnh {
+    font-weight: 700;
+    color: #a32212;
+    font-size: 1.1rem !important;
+  }
+
+  .homenagem-fechamento {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: var(--space-6);
+    max-width: none;
+  }
+
+  .homenagem-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .btn--presente {
+    background: var(--taxi);
+    color: var(--ink);
+  }
+  .btn--presente:hover {
+    background: #f7ce6d;
+  }
+
+  .btn--wpp-homenagem {
+    background: var(--signal);
+    color: #fff;
+  }
+  .btn--wpp-homenagem:hover {
+    background: #237440;
+  }
+
+  /* Coluna Lateral da Foto */
+  .homenagem-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .homenagem-moldura {
+    background: #fff;
+    padding: 0.85rem;
+    padding-bottom: 1.25rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), 0 4px 0 var(--ink);
+    transform: rotate(-1.5deg);
+    transition: transform 250ms var(--ease-out);
+    width: 100%;
+    max-width: 440px;
+  }
+  .homenagem-moldura:hover {
+    transform: rotate(0deg) scale(1.02);
+  }
+
+  .homenagem-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .homenagem-polaroid-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 0.75rem;
+    text-align: center;
+  }
+  .legend-star {
+    color: #d49b28;
+  }
+
+  .homenagem-selos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 440px;
+  }
+  .selo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #f4eee1;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .selo-emoji {
+    font-size: 1.2rem;
+  }
+
+  @media (min-width: 900px) {
+    .homenagem-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .corner-tl, .corner-tr {
+      animation: none !important;
+    }
+  }
+</style>

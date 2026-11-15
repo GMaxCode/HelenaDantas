@@ -1,0 +1,913 @@
+---
+// src/components/AniversarioModal.astro
+// Homenagem e presente especial de aniversário para a Professora Helena!
+// Inclui:
+// 1. Barra de aviso festiva no topo do site
+// 2. Botão flutuante de presente (canto inferior esquerdo)
+// 3. Modal interativo com a mensagem emocionante, chuva de confetes no Canvas e sintetizador de "Parabéns pra você"
+import { site, linkWhatsApp } from '../data/site';
+
+const mensagemWhatsApp =
+  'Helena, vi a linda homenagem no seu site! Parabéns pelo seu aniversário, prof! Muita saúde, paz, bênçãos e realizações! 🎂🎉🚗';
+const linkWppParabens = linkWhatsApp(mensagemWhatsApp);
+---
+
+<!-- Barra festiva no topo do site -->
+<aside class="bday-topbar" id="bday-topbar" aria-label="Aviso de aniversário">
+  <div class="container bday-topbar-inner">
+    <div class="bday-topbar-content">
+      <span class="bday-pulse-icon" aria-hidden="true">🎂</span>
+      <p class="bday-topbar-text">
+        <strong>Hoje é aniversário da Professora Helena!</strong>
+        <span class="bday-topbar-sub">Deixamos uma homenagem especial e cheia de carinho para ela.</span>
+      </p>
+    </div>
+    <div class="bday-topbar-actions">
+      <button type="button" class="bday-topbar-btn" id="bday-open-from-bar">
+        <span>Abrir Homenagem</span>
+        <span aria-hidden="true">🎁</span>
+      </button>
+      <button
+        type="button"
+        class="bday-topbar-close"
+        id="bday-close-bar"
+        aria-label="Fechar barra de aviso"
+        title="Fechar aviso"
+      >
+        ✕
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- Botão flutuante de presente (canto inferior esquerdo, não colide com o WppFab na direita) -->
+<button
+  type="button"
+  class="bday-fab"
+  id="bday-fab"
+  aria-label="Abrir homenagem de aniversário da Helena"
+  title="Abrir homenagem de aniversário da Helena"
+>
+  <span class="bday-fab-icon" aria-hidden="true">🎁</span>
+  <span class="bday-fab-badge">Aniversário! 🎉</span>
+</button>
+
+<!-- Modal com a homenagem e o presente -->
+<div
+  class="bday-modal-backdrop"
+  id="bday-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="bday-modal-title"
+  hidden
+>
+  <div class="bday-modal-dialog">
+    <!-- Botão fechar modal -->
+    <button
+      type="button"
+      class="bday-modal-close"
+      id="bday-close-modal"
+      aria-label="Fechar homenagem de aniversário"
+    >
+      ✕
+    </button>
+
+    <!-- Cabeçalho do Cartão -->
+    <header class="bday-modal-header">
+      <div class="bday-badge-ribbon">
+        <span class="bday-sparkle" aria-hidden="true">✨</span>
+        <span>EDIÇÃO ESPECIAL · 15 DE NOVEMBRO</span>
+        <span class="bday-sparkle" aria-hidden="true">✨</span>
+      </div>
+
+      <div class="bday-icon-row" aria-hidden="true">
+        <span class="bday-emoji-pop">🎉</span>
+        <span class="bday-emoji-cake">🎂</span>
+        <span class="bday-emoji-car">🚗</span>
+        <span class="bday-emoji-heart">❤️</span>
+      </div>
+
+      <h2 id="bday-modal-title" class="bday-title">
+        Feliz Aniversário, Professora Helena!
+      </h2>
+      <p class="bday-subtitle">
+        Uma homenagem sincera de gratidão, carinho e admiração por quem ensina com o coração.
+      </p>
+    </header>
+
+    <!-- Corpo da Mensagem (Texto do Aluno) -->
+    <article class="bday-letter">
+      <p class="bday-p bday-intro">
+        <strong>Feliz aniversário, prof! 🥳🎉</strong> Hoje quero te desejar um dia muito especial,
+        cheio de carinho, alegria e pessoas queridas por perto. Que Deus abençoe sua vida,
+        ilumine seus caminhos e te dê muita saúde, paz e motivos para sorrir. Que esse novo ciclo
+        venha com boas surpresas, conquistas e a realização de tudo aquilo que você guarda no coração!
+      </p>
+
+      <blockquote class="bday-highlight-box">
+        <div class="bday-quote-icon" aria-hidden="true">“</div>
+        <p>
+          Também quero aproveitar para agradecer pela <strong>paciência</strong>, pela <strong>dedicação</strong>
+          e por todos os ensinamentos durante as aulas. Aprender a dirigir envolve nervosismo,
+          insegurança e aquele medo de errar, então <em>faz muita diferença</em> ter alguém para orientar
+          e dar confiança nesse processo.
+        </p>
+        <p class="bday-cnh-highlight">
+          Você fez parte de uma conquista muito importante para mim, e vou lembrar com carinho
+          dessa fase e da sua ajuda para conquistar minha CNH! 🚗❤️
+        </p>
+      </blockquote>
+
+      <p class="bday-p">
+        Que você continue ajudando muitas pessoas a realizarem esse sonho e que receba de volta todo
+        o carinho que coloca no seu trabalho. Aproveite bastante seu dia, receba muitos abraços e
+        comemore muito. <strong>Parabéns e muitas felicidades! 🥰🎂</strong>
+      </p>
+
+      <div class="bday-signature">
+        <span class="bday-sig-tag">Com carinho & eterna gratidão</span>
+        <p class="bday-sig-text">De quem conquistou a CNH com a sua ajuda e paciência! 🚗💨✨</p>
+      </div>
+    </article>
+
+    <!-- Barra de Ações Interativas (Confetes, Música, WhatsApp) -->
+    <footer class="bday-modal-footer">
+      <div class="bday-btn-group">
+        <button type="button" class="bday-btn bday-btn--confetti" id="bday-trigger-confetti">
+          <span aria-hidden="true">🎊</span>
+          <span>Mais Confetes!</span>
+        </button>
+
+        <button type="button" class="bday-btn bday-btn--music" id="bday-toggle-music">
+          <span class="music-icon" aria-hidden="true">🎶</span>
+          <span class="music-text">Tocar Parabéns</span>
+        </button>
+
+        <a
+          href={linkWppParabens}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bday-btn bday-btn--wpp"
+          aria-label="Mandar mensagem de parabéns para a Helena no WhatsApp"
+        >
+          <span aria-hidden="true">💬</span>
+          <span>Dar Parabéns no WhatsApp</span>
+        </a>
+      </div>
+
+      <button type="button" class="bday-btn-dismiss" id="bday-dismiss-bottom">
+        Continuar navegando no site ↓
+      </button>
+    </footer>
+  </div>
+</div>
+
+<!-- Canvas transparente para os confetes -->
+<canvas id="bday-canvas" class="bday-canvas" aria-hidden="true"></canvas>
+
+<script>
+  // ==========================================
+  // CONFETTI ENGINE (Canvas 60fps Nativo)
+  // ==========================================
+  const canvas = document.getElementById('bday-canvas') as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext('2d');
+
+  interface Particle {
+    x: number;
+    y: number;
+    size: number;
+    color: string;
+    vx: number;
+    vy: number;
+    rotation: number;
+    rotationSpeed: number;
+    opacity: number;
+    shape: 'rect' | 'circle';
+  }
+
+  let particles: Particle[] = [];
+  let animId: number | null = null;
+
+  function resizeCanvas() {
+    if (!canvas) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas, { passive: true });
+  resizeCanvas();
+
+  const PALETTE = ['#f2c14e', '#c8311e', '#2c8f4f', '#ff5a5f', '#ffb703', '#3a86ff', '#8338ec', '#ffffff'];
+
+  function addConfettiBurst(count = 80) {
+    if (!canvas) return;
+    const startX = canvas.width / 2;
+    const startY = Math.min(canvas.height * 0.45, 450);
+
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 4 + Math.random() * 9;
+      particles.push({
+        x: startX + (Math.random() - 0.5) * 120,
+        y: startY + (Math.random() - 0.5) * 60,
+        size: 7 + Math.random() * 8,
+        color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 3.5,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 10,
+        opacity: 1,
+        shape: Math.random() > 0.3 ? 'rect' : 'circle',
+      });
+    }
+
+    if (!animId) {
+      loopConfetti();
+    }
+  }
+
+  function loopConfetti() {
+    if (!ctx || !canvas) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.22; // Gravidade
+      p.vx *= 0.985; // Fricção
+      p.rotation += p.rotationSpeed;
+      p.opacity -= 0.007;
+
+      if (p.opacity <= 0 || p.y > canvas.height + 20) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size / 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    if (particles.length > 0) {
+      animId = requestAnimationFrame(loopConfetti);
+    } else {
+      animId = null;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  // ==========================================
+  // WEB AUDIO SINTETIZADOR: "PARABÉNS PRA VOCÊ"
+  // ==========================================
+  let audioCtx: AudioContext | null = null;
+  let isPlayingMusic = false;
+  let musicTimeout: number | null = null;
+
+  function stopMusic() {
+    isPlayingMusic = false;
+    if (musicTimeout) {
+      clearTimeout(musicTimeout);
+      musicTimeout = null;
+    }
+    if (audioCtx) {
+      try {
+        audioCtx.close();
+      } catch (e) {
+        // Ignora
+      }
+      audioCtx = null;
+    }
+    updateMusicButtonState(false);
+  }
+
+  function playHappyBirthday() {
+    stopMusic();
+
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    audioCtx = new AudioContextClass();
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    isPlayingMusic = true;
+    updateMusicButtonState(true);
+
+    const beat = 0.40;
+    // Notas de "Parabéns Pra Você": Sol, Sol, Lá, Sol, Dó, Si...
+    const notes = [
+      { freq: 392.00, dur: 0.75 }, // Sol
+      { freq: 392.00, dur: 0.25 }, // Sol
+      { freq: 440.00, dur: 1.0 },  // Lá
+      { freq: 392.00, dur: 1.0 },  // Sol
+      { freq: 523.25, dur: 1.0 },  // Dó
+      { freq: 493.88, dur: 2.0 },  // Si
+      { rest: 0.25 },
+      { freq: 392.00, dur: 0.75 }, // Sol
+      { freq: 392.00, dur: 0.25 }, // Sol
+      { freq: 440.00, dur: 1.0 },  // Lá
+      { freq: 392.00, dur: 1.0 },  // Sol
+      { freq: 587.33, dur: 1.0 },  // Ré
+      { freq: 523.25, dur: 2.0 },  // Dó
+      { rest: 0.25 },
+      { freq: 392.00, dur: 0.75 }, // Sol
+      { freq: 392.00, dur: 0.25 }, // Sol
+      { freq: 783.99, dur: 1.0 },  // Sol (alto)
+      { freq: 659.25, dur: 1.0 },  // Mi
+      { freq: 523.25, dur: 1.0 },  // Dó
+      { freq: 493.88, dur: 1.0 },  // Si
+      { freq: 440.00, dur: 1.6 },  // Lá
+      { rest: 0.25 },
+      { freq: 698.46, dur: 0.75 }, // Fá
+      { freq: 698.46, dur: 0.25 }, // Fá
+      { freq: 659.25, dur: 1.0 },  // Mi
+      { freq: 523.25, dur: 1.0 },  // Dó
+      { freq: 587.33, dur: 1.0 },  // Ré
+      { freq: 523.25, dur: 2.5 },  // Dó
+    ];
+
+    let time = audioCtx.currentTime + 0.05;
+
+    for (const n of notes) {
+      if (n.rest) {
+        time += n.rest * beat;
+        continue;
+      }
+      if (!n.freq) continue;
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      // Timbre caloroso (onda triangular + harmônico suave)
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(n.freq, time);
+
+      // Envelope musical suave (ataque rápido, decay natural de sininho)
+      gain.gain.setValueAtTime(0.001, time);
+      gain.gain.linearRampToValueAtTime(0.22, time + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001, time + n.dur * beat);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(time);
+      osc.stop(time + n.dur * beat);
+
+      time += n.dur * beat;
+    }
+
+    const totalDurationMs = (time - audioCtx.currentTime + 0.5) * 1000;
+    musicTimeout = window.setTimeout(() => {
+      stopMusic();
+    }, totalDurationMs);
+  }
+
+  function updateMusicButtonState(playing: boolean) {
+    const musicBtn = document.getElementById('bday-toggle-music');
+    if (!musicBtn) return;
+    const textSpan = musicBtn.querySelector('.music-text');
+    const iconSpan = musicBtn.querySelector('.music-icon');
+    if (playing) {
+      if (textSpan) textSpan.textContent = 'Pausar Melodia';
+      if (iconSpan) iconSpan.textContent = '⏸️';
+      musicBtn.classList.add('is-playing');
+    } else {
+      if (textSpan) textSpan.textContent = 'Tocar Parabéns';
+      if (iconSpan) iconSpan.textContent = '🎶';
+      musicBtn.classList.remove('is-playing');
+    }
+  }
+
+  // ==========================================
+  // CONTROLE DO MODAL, BARRA E FAB
+  // ==========================================
+  const modal = document.getElementById('bday-modal');
+  const fab = document.getElementById('bday-fab');
+  const topbar = document.getElementById('bday-topbar');
+  const btnCloseModal = document.getElementById('bday-close-modal');
+  const btnDismissBottom = document.getElementById('bday-dismiss-bottom');
+  const btnCloseBar = document.getElementById('bday-close-bar');
+  const btnOpenFromBar = document.getElementById('bday-open-from-bar');
+  const btnTriggerConfetti = document.getElementById('bday-trigger-confetti');
+  const btnToggleMusic = document.getElementById('bday-toggle-music');
+
+  function openBdayModal() {
+    if (!modal) return;
+    modal.removeAttribute('hidden');
+    modal.classList.add('is-active');
+    document.body.classList.add('bday-modal-open');
+
+    // Lança confetes comemorativos
+    addConfettiBurst(100);
+
+    // Foco no fechar para acessibilidade
+    btnCloseModal?.focus();
+  }
+
+  function closeBdayModal() {
+    if (!modal) return;
+    modal.classList.remove('is-active');
+    setTimeout(() => {
+      modal.setAttribute('hidden', '');
+      document.body.classList.remove('bday-modal-open');
+    }, 250);
+    stopMusic();
+  }
+
+  // Abre ao clicar no FAB ou no botão da barra
+  fab?.addEventListener('click', () => {
+    openBdayModal();
+  });
+
+  btnOpenFromBar?.addEventListener('click', () => {
+    openBdayModal();
+  });
+
+  // Fechar modal
+  btnCloseModal?.addEventListener('click', closeBdayModal);
+  btnDismissBottom?.addEventListener('click', closeBdayModal);
+
+  // Fecha clicando fora da caixa do diálogo
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeBdayModal();
+    }
+  });
+
+  // Tecla Esc fecha modal
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) {
+      closeBdayModal();
+    }
+  });
+
+  // Fechar barra superior
+  btnCloseBar?.addEventListener('click', () => {
+    if (topbar) {
+      topbar.style.display = 'none';
+    }
+  });
+
+  // Botão Soltar Mais Confetes
+  btnTriggerConfetti?.addEventListener('click', () => {
+    addConfettiBurst(90);
+  });
+
+  // Botão de Música
+  btnToggleMusic?.addEventListener('click', () => {
+    if (isPlayingMusic) {
+      stopMusic();
+    } else {
+      playHappyBirthday();
+    }
+  });
+
+  // Auto-abertura surpresa na primeira visualização da sessão!
+  window.addEventListener('DOMContentLoaded', () => {
+    const hasSeen = sessionStorage.getItem('helena_bday_seen_v1');
+    if (!hasSeen) {
+      setTimeout(() => {
+        openBdayModal();
+        sessionStorage.setItem('helena_bday_seen_v1', 'true');
+      }, 700);
+    }
+  });
+</script>
+
+<style>
+  /* ------------------------------------------
+   * 1. BARRA SUPERIOR FESTIVA
+   * ------------------------------------------ */
+  .bday-topbar {
+    background: linear-gradient(90deg, #f2c14e 0%, #ffd166 50%, #f2c14e 100%);
+    color: var(--ink);
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    z-index: 55;
+    padding: var(--space-2) 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  .bday-topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .bday-topbar-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .bday-pulse-icon {
+    font-size: 1.35rem;
+    display: inline-block;
+    animation: bdayWiggle 2s infinite ease-in-out;
+  }
+  @keyframes bdayWiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-8deg) scale(1.1); }
+    75% { transform: rotate(8deg) scale(1.1); }
+  }
+  .bday-topbar-text {
+    font-size: var(--text-sm);
+    margin: 0;
+    max-width: none;
+    line-height: 1.3;
+  }
+  .bday-topbar-sub {
+    display: inline;
+    color: #433924;
+    margin-left: var(--space-1);
+  }
+  .bday-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+  }
+  .bday-topbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--ink);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.3);
+    transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  }
+  .bday-topbar-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+  }
+  .bday-topbar-close {
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: var(--space-1);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 150ms ease;
+  }
+  .bday-topbar-close:hover {
+    opacity: 1;
+  }
+
+  /* ------------------------------------------
+   * 2. BOTÃO FLUTUANTE (FAB) DE PRESENTE
+   * ------------------------------------------ */
+  .bday-fab {
+    position: fixed;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    left: 1.25rem;
+    z-index: 65;
+    background: linear-gradient(135deg, #f2c14e 0%, #e6a21d 100%);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.5rem 1rem 0.5rem 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2), 0 4px 0 var(--ink);
+    transition: transform 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
+    animation: bdayFabPulse 3s infinite ease-in-out;
+  }
+  @keyframes bdayFabPulse {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-4px) scale(1.04); }
+  }
+  .bday-fab:hover {
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 2px 0 var(--ink);
+  }
+  .bday-fab-icon {
+    font-size: 1.5rem;
+    display: inline-block;
+  }
+  .bday-fab-badge {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* ------------------------------------------
+   * 3. MODAL DE HOMENAGEM
+   * ------------------------------------------ */
+  .bday-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(14, 14, 16, 0.78);
+    backdrop-filter: blur(6px);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms var(--ease-out);
+  }
+  .bday-modal-backdrop.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  :global(body.bday-modal-open) {
+    overflow: hidden;
+  }
+
+  .bday-modal-dialog {
+    background: #fffdf9;
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 8px 0 var(--ink);
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    transform: scale(0.94) translateY(12px);
+    transition: transform 280ms var(--ease-out);
+    background-image: radial-gradient(#ece4d4 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .bday-modal-backdrop.is-active .bday-modal-dialog {
+    transform: scale(1) translateY(0);
+  }
+
+  .bday-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    box-shadow: 0 2px 0 var(--ink);
+    transition: transform 150ms ease, background 150ms ease;
+  }
+  .bday-modal-close:hover {
+    transform: scale(1.1);
+    background: var(--stop);
+    color: #fff;
+  }
+
+  /* Cabeçalho */
+  .bday-modal-header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+  .bday-badge-ribbon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--taxi);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 0.35rem 0.85rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 2px 0 var(--ink);
+    margin-bottom: var(--space-4);
+  }
+  .bday-sparkle {
+    font-size: 0.95rem;
+  }
+  .bday-icon-row {
+    font-size: 2.2rem;
+    letter-spacing: 0.4rem;
+    margin-bottom: var(--space-3);
+  }
+  .bday-title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--ink);
+    margin: 0 0 var(--space-2);
+    line-height: 1.05;
+  }
+  .bday-subtitle {
+    font-size: var(--text-base);
+    color: #55514b;
+    max-width: 50ch;
+    margin: 0 auto;
+    font-style: italic;
+  }
+
+  /* Carta */
+  .bday-letter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #2b2824;
+  }
+  .bday-p {
+    max-width: none;
+    margin: 0;
+  }
+  .bday-intro {
+    font-size: 1.12rem;
+  }
+  .bday-highlight-box {
+    position: relative;
+    background: #fff8e8;
+    border-left: 5px solid var(--stop);
+    border-top: 1.5px solid rgba(200, 49, 30, 0.25);
+    border-right: 1.5px solid rgba(200, 49, 30, 0.25);
+    border-bottom: 1.5px solid rgba(200, 49, 30, 0.25);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 1.25rem 1.4rem 1.25rem 1.6rem;
+    margin: 0.5rem 0;
+  }
+  .bday-quote-icon {
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    font-family: Georgia, serif;
+    font-size: 4rem;
+    color: rgba(200, 49, 30, 0.12);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .bday-highlight-box p {
+    max-width: none;
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 1;
+  }
+  .bday-highlight-box p:last-child {
+    margin-bottom: 0;
+  }
+  .bday-cnh-highlight {
+    font-weight: 700;
+    color: #9c1d0e;
+    font-size: 1.1rem;
+  }
+  .bday-signature {
+    margin-top: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px dashed rgba(27, 27, 31, 0.2);
+    text-align: right;
+  }
+  .bday-sig-tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stop);
+    font-weight: 700;
+  }
+  .bday-sig-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 0.2rem;
+  }
+
+  /* Rodapé do Modal com Botões */
+  .bday-modal-footer {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 2px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .bday-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    width: 100%;
+  }
+  .bday-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+    border: 2px solid var(--ink);
+    box-shadow: 0 4px 0 var(--ink);
+  }
+  .bday-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 0 var(--ink);
+    text-decoration: none;
+  }
+  .bday-btn--confetti {
+    background: var(--taxi);
+    color: var(--ink);
+  }
+  .bday-btn--music {
+    background: #fff;
+    color: var(--ink);
+  }
+  .bday-btn--music.is-playing {
+    background: #ffecb3;
+    animation: musicPulse 1s infinite alternate;
+  }
+  @keyframes musicPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.03); }
+  }
+  .bday-btn--wpp {
+    background: var(--signal);
+    color: #fff;
+  }
+  .bday-btn-dismiss {
+    background: transparent;
+    border: none;
+    font-size: var(--text-sm);
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0.25rem 0.5rem;
+    transition: color 150ms ease;
+  }
+  .bday-btn-dismiss:hover {
+    color: var(--ink);
+  }
+
+  /* ------------------------------------------
+   * 4. CANVAS DOS CONFETES
+   * ------------------------------------------ */
+  .bday-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Responsividade */
+  @media (max-width: 640px) {
+    .bday-topbar-sub {
+      display: none;
+    }
+    .bday-btn {
+      width: 100%;
+    }
+    .bday-modal-dialog {
+      padding: 1.25rem 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bday-pulse-icon,
+    .bday-fab {
+      animation: none !important;
+    }
+  }
+</style>
